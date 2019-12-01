@@ -29,6 +29,8 @@ const getInput = day =>
     .split('\n')
     .map(n => Number(n));
 
-const solution = require(`./day${day}`);
-
-console.log(`solution for day ${day} = ${solution(getInput(day))}`);
+const solution = require(`./day${day}/day${day}${part ? `.p${part}` : ''}`);
+const result = solution(getInput(day));
+console.log(
+  `solution for day ${day}${part ? ` part ${part}` : ''} = ${result}`,
+);
