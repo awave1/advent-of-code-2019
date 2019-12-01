@@ -1,16 +1,17 @@
 {
   "name": "advent-of-code",
   "version": "1.0.0",
-  "description": "",
+  "description": "Solutions for Advent of Code 2019",
   "main": "day1.js",
   "scripts": {
-    "solve": "node src/main.js",
+    "solve": "node src/solve.js",
     "test": "jest"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "jest": "^24.9.0"
+    "jest": "^24.9.0",
+    "yargs": "^15.0.2"
   }
 }
