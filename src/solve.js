@@ -13,6 +13,7 @@ const argv = yargs
     number: true,
     description: 'Specify part for the problem of the day',
     implies: 'day',
+    default: 1,
   })
   .option('all', {
     alias: 'A',
@@ -23,11 +24,22 @@ const argv = yargs
 
 const { day, part } = argv;
 
-const getInput = day =>
-  fs.readFileSync(`${__dirname}/day${day}/input${day}`, 'utf-8');
+const getInput = (day, part) => {
+  const basePath = (file = '') => `${__dirname}/day${day}/${file}`;
+  const input = fs
+    .readdirSync(basePath())
+    .map(basePath)
+    .find(f => f.includes(`input${day}.${part}`));
+
+  if (input && fs.existsSync(input)) {
+    return fs.readFileSync(input, 'utf-8');
+  }
+
+  return '';
+};
 
 const { solve } = require(`./day${day}/day${day}${part ? `.p${part}` : ''}`);
-const result = solve(getInput(day));
+const result = solve(getInput(day, part));
 console.log(
   `solution for day ${day}${part ? ` part ${part}` : ''} = ${result}`
 );
