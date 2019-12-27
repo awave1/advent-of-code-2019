@@ -27,4 +27,4 @@ function solve(input) {
   return input.map(mass => Math.floor(mass / 3) - 2).reduce((a, b) => a + b, 0);
 }
 
-module.exports = solve;
+module.exports = { solve };

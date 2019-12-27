@@ -21,16 +21,13 @@ const argv = yargs
   })
   .help().argv;
 
-const {day, part} = argv;
+const { day, part } = argv;
 
 const getInput = day =>
-  fs
-    .readFileSync(`${__dirname}/day${day}/input${day}`, 'utf-8')
-    .split('\n')
-    .map(n => Number(n));
+  fs.readFileSync(`${__dirname}/day${day}/input${day}`, 'utf-8');
 
-const solution = require(`./day${day}/day${day}${part ? `.p${part}` : ''}`);
-const result = solution(getInput(day));
+const { solve } = require(`./day${day}/day${day}${part ? `.p${part}` : ''}`);
+const result = solve(getInput(day));
 console.log(
-  `solution for day ${day}${part ? ` part ${part}` : ''} = ${result}`,
+  `solution for day ${day}${part ? ` part ${part}` : ''} = ${result}`
 );

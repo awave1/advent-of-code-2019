@@ -49,4 +49,4 @@ function solve(input) {
     .reduce((a, b) => a + b, 0);
 }
 
-module.exports = solve;
+module.exports = { solve };
