@@ -55,15 +55,12 @@ function solve(input) {
     const op = params[i];
 
     if (op === ADD_OP || op === MUL_OP) {
-      console.log({ op });
       const index1 = params[i + 1];
       const index2 = params[i + 2];
 
       const val1 = params[index1];
       const val2 = params[index2];
       const resultIndex = params[i + 3];
-
-      console.log({ index1, index2, resultIndex });
 
       params[resultIndex] = op === ADD_OP ? val1 + val2 : val1 * val2;
     } else if (op === HALT_OP) {
@@ -72,8 +69,6 @@ function solve(input) {
     }
   }
 
-  console.log('Results:');
-  params.chunk(COMMAND_SIZE).forEach(c => console.log(c));
   return params.join(',');
 }
 
