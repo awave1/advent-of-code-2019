@@ -60,6 +60,7 @@ class IntCC {
 
         const val1 = program[index1];
         const val2 = program[index2];
+
         const resultIndex = program[i + 3];
 
         program[resultIndex] = op === ADD ? val1 + val2 : val1 * val2;

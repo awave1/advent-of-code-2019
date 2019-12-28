@@ -1,8 +1,12 @@
 const { IntCC } = require('./intcodeCompiler');
 
-function solve(input) {
+function solve(input, withNounAndVerb = true) {
   const compiler = new IntCC(input);
-  return compiler.setNounAndVerb(12, 2).compile();
+  if (withNounAndVerb) {
+    compiler.setNounAndVerb(12, 2);
+  }
+
+  return compiler.compile();
 }
 
 module.exports = {

@@ -1,8 +1,7 @@
 const { IntCC } = require('./intcodeCompiler');
 
-function solve(input) {
+function solve(input, expected = 19690720) {
   const compiler = new IntCC(input);
-  const expected = 19690720;
   let noun = 0;
   let verb = 0;
   let found = false;
@@ -13,14 +12,13 @@ function solve(input) {
       if (result === expected) {
         noun = i;
         verb = j;
-        found = true;
+        return 100 * noun + verb;
       }
       compiler.reset();
     }
-    compiler.reset();
   }
 
-  return 100 * noun + verb;
+  return -1;
 }
 
 module.exports = {

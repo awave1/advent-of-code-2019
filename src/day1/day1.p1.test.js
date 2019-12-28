@@ -1,4 +1,4 @@
-const { solve } = require('./day1');
+const { solve } = require('./day1.p1');
 
 test('day1: calculates correct values', () => {
   const testValues = [12, 14, 1969, 100756];
