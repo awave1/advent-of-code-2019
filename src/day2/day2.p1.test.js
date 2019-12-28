@@ -1,18 +1,18 @@
-const { solve } = require('./day2');
+const { solve } = require('./day2.p1');
 
 test('day2', () => {
   const tests = [
     {
       program: `1,9,10,3,2,3,11,0,99,30,40,50`,
-      result: `3500,9,10,70,2,3,11,0,99,30,40,50`,
+      result: `3500`,
     },
     {
       program: `1,0,0,0,99`,
-      result: `2,0,0,0,99`,
+      result: `2`,
     },
     {
       program: `2,4,4,5,99,0`,
-      result: `2,4,4,5,99,9801`,
+      result: `2`,
     },
   ];
 

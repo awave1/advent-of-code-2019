@@ -24,6 +24,7 @@ const opcodes = {
 class IntCC {
   constructor(code) {
     this.code = code;
+    this.program = this.parse();
   }
 
   parse() {
@@ -33,30 +34,45 @@ class IntCC {
       .filter(n => !isNaN(n));
   }
 
+  setNounAndVerb(nounVal, verbVal) {
+    const noun = 1;
+    const verb = 2;
+
+    if (nounVal && verbVal) {
+      this.program[noun] = nounVal;
+      this.program[verb] = verbVal;
+    }
+
+    return this;
+  }
+
   compile() {
-    const params = this.parse();
+    const { program } = this;
     const { HALT, ADD, MUL } = opcodes;
 
     // Command size is 4, therefore iterate over blocks of 4
-    for (let i = 0; i < params.length; i += 4) {
-      const op = params[i];
+    for (let i = 0; i < program.length; i += 4) {
+      const op = program[i];
 
       if (op === ADD || op === MUL) {
-        const index1 = params[i + 1];
-        const index2 = params[i + 2];
+        const index1 = program[i + 1];
+        const index2 = program[i + 2];
 
-        const val1 = params[index1];
-        const val2 = params[index2];
-        const resultIndex = params[i + 3];
+        const val1 = program[index1];
+        const val2 = program[index2];
+        const resultIndex = program[i + 3];
 
-        params[resultIndex] = op === ADD ? val1 + val2 : val1 * val2;
+        program[resultIndex] = op === ADD ? val1 + val2 : val1 * val2;
       } else if (op === HALT) {
-        console.warn('HALT_OP found, stopping');
         break;
       }
     }
 
-    return params.join(',');
+    return program[0];
+  }
+
+  reset() {
+    this.program = this.parse();
   }
 }
 
