@@ -12,36 +12,44 @@ const parse = data =>
 const dx = { R: 1, L: -1, U: 0, D: 0 };
 const dy = { U: 1, D: -1, L: 0, R: 0 };
 
-/**
- *
- * @param {string[]} wire
- */
-function plotPoints(wire) {
+function plotPoints(entries) {
   let x = 0;
   let y = 0;
-  const set = new Set();
+  let map = new Map();
 
-  set.add({ x, y });
+  for (let i = 0; i < entries.length; i++) {
+    const entry = entries[i];
+    for (const { direction, val } of entry) {
+      for (let j = 0; j < val; j++) {
+        x += dx[direction];
+        y += dy[direction];
 
-  for (const { direction, val } of wire) {
-    for (let i = 0; i < val; i++) {
-      x += dx[direction];
-      y += dy[direction];
-
-      set.add({ x, y });
+        const key = `${x},${y}`;
+        if (!map.has(key)) {
+          map.set(key, [i]);
+        } else {
+          const arr = map.get(key);
+          if (!arr.includes(i)) {
+            map.get(key).push(i);
+          }
+        }
+      }
     }
   }
 
-  return [...set];
+  return map;
 }
 
-function intersection(pointsA, pointsB) {
+function intersection(hashmap) {
   const result = [];
-  for (const { x: xA, y: yA } of pointsA) {
-    for (const { x: xB, y: yB } of pointsB) {
-      if (xA === xB && yA === yB) {
-        result.push({ x: xA, y: yB });
-      }
+  const entries = hashmap.entries();
+
+  for (let [k, v] of entries) {
+    if (v.length === 2) {
+      const [x, y] = k.split(',');
+      result.push({ x: _.toInteger(x), y: _.toInteger(y) });
+    } else {
+      hashmap.delete(k);
     }
   }
 
@@ -49,13 +57,9 @@ function intersection(pointsA, pointsB) {
 }
 
 function solve(input) {
-  const [wireA, wireB] = parse(input);
-  const pointsA = plotPoints(wireA);
-  const pointsB = plotPoints(wireB);
-  const intersected = intersection(pointsA, pointsB);
-  const sums = intersected
-    .map(({ x, y }) => abs(x) + abs(y))
-    .filter(sum => sum != 0);
+  const plotResult = plotPoints(parse(input));
+  const intersected = intersection(plotResult);
+  const sums = intersected.map(({ x, y }) => abs(x) + abs(y));
 
   return _.min(sums);
 }
