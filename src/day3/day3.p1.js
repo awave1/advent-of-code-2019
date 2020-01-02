@@ -35,6 +35,9 @@ function plotPoints(entries) {
         }
       }
     }
+
+    x = 0;
+    y = 0;
   }
 
   return map;
