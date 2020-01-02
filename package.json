@@ -5,6 +5,7 @@
   "main": "day1.js",
   "scripts": {
     "solve": "node src/solve.js",
+    "create": "node src/create.js",
     "test": "jest"
   },
   "keywords": [],
