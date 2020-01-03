@@ -1,8 +1,71 @@
+const _ = require('lodash');
+
+/**
+ * Check if given password matches the following:
+ *
+ * - It is a six-digit number.
+ * - Two adjacent digits are the same (like 22 in 122345).
+ * - Going from left to right, the digits never decrease;
+ *   they only ever increase or stay the same (like 111123 or 135679).
+ *
+ * @param {number} password
+ * @return {boolean} true if all conditions are satisfied
+ */
+function checkPassword(password) {
+  let pass = `${password}`.split('').map(_.toInteger);
+
+  if (pass.length < 6) {
+    return false;
+  }
+
+  const isIncreasing = pass.every((val, i, arr) => i === 0 || arr[i - 1] <= val);
+
+  if (!isIncreasing) {
+    return false;
+  }
+
+  const dups = new Map();
+  for (let i = 0; i < pass.length; i++) {
+    const num = pass[i];
+
+    if (!dups.has(num)) {
+      dups.set(num, 1);
+    } else {
+      let count = dups.get(num) + 1;
+      dups.set(num, count);
+    }
+  }
+
+  const entries = dups.entries();
+  for (const entry of entries) {
+    const [num, count] = entry;
+    if (count === 2) {
+      return true;
+    } else {
+      dups.delete(num);
+    }
+  }
+
+  return dups.size !== 0;
+}
+
+function countPossible(from, to) {
+  let count = 0;
+  for (let i = from; i <= to; i++) {
+    if (checkPassword(i)) {
+      count++;
+    }
+  }
+
+  return count;
+}
 
 function solve(input) {
-  console.log('TODO');
+  const [from, to] = input.split('-').map(_.toInteger);
+  return countPossible(from, to);
 }
 
 module.exports = {
   solve,
+  checkPassword,
 };

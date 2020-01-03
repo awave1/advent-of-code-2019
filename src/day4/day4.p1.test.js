@@ -7,7 +7,7 @@ test('day4.p1: check password - should meet the criteria', () => {
   expect(checkPassword(pass)).toBe(true);
 });
 
-test('day4.p2: check password - should fail - less than 6 chars', () => {
+test('day4.p1: check password - should fail - less than 6 chars', () => {
   const pass = 123;
   expect(checkPassword(pass)).toBe(false);
 });

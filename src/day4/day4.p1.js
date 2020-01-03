@@ -12,42 +12,39 @@ const _ = require('lodash');
  * @return {boolean} true if all conditions are satisfied
  */
 function checkPassword(password) {
-  let pass = `${password}`;
+  let pass = `${password}`.split('').map(_.toInteger);
 
   if (pass.length < 6) {
     return false;
   }
 
-  let adjacentFound = false;
-  let checkPassed = false;
+  const isIncreasing = pass.every((val, i, arr) => i === 0 || arr[i - 1] <= val);
 
+  if (!isIncreasing) {
+    return false;
+  }
+
+  const dups = new Map();
   for (let i = 0; i < pass.length; i++) {
-    let num = _.toInteger(pass[i]);
-    let next;
-    if (i !== pass.length - 1) {
-      next = _.toInteger(pass[i + 1]);
-    }
+    const num = pass[i];
 
-    let increasing = false;
-    if (next !== undefined) {
-      increasing = num <= next;
+    if (!dups.has(num)) {
+      dups.set(num, 1);
     } else {
-      increasing = num >= pass[i - 1];
-    }
-
-    if (!adjacentFound) {
-      adjacentFound = next ? num === next : num === pass[i - 1];
-    }
-
-    checkPassed = adjacentFound && increasing;
-
-    // return early if sequence not in increasing order
-    if (!increasing) {
-      return false;
+      let count = dups.get(num);
+      count += 1;
+      dups.set(num, count);
     }
   }
 
-  return checkPassed;
+  const entries = dups.entries();
+  for (const [num, count] of entries) {
+    if (count === 1) {
+      dups.delete(num);
+    }
+  }
+
+  return dups.size !== 0;
 }
 
 function countPossible(from, to) {
