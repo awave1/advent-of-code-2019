@@ -18,7 +18,9 @@ function checkPassword(password) {
     return false;
   }
 
-  const isIncreasing = pass.every((val, i, arr) => i === 0 || arr[i - 1] <= val);
+  const isIncreasing = pass.every(
+    (val, i, arr) => i === 0 || arr[i - 1] <= val
+  );
 
   if (!isIncreasing) {
     return false;
