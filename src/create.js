@@ -7,9 +7,15 @@ const argv = yargs.usage('$0 [args]').option('day', {
   alias: 'd',
   number: true,
   description: 'Create template for specified day number',
+  required: true,
 }).argv;
 
 const { day } = argv;
+
+if (!day) {
+  console.warn('Please specify the day (via -d <day> flag)');
+  return;
+}
 
 const basePath = (file = '') => `${__dirname}/day${day}/${file}`;
 fs.mkdir(basePath(), { recursive: true }, async (err) => {
