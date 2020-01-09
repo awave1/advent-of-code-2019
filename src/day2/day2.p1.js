@@ -1,4 +1,4 @@
-const { IntCC } = require('./intcodeCompiler');
+const { IntCC } = require('../intcode/intcodeCompiler');
 
 function solve(input, withNounAndVerb = true) {
   const compiler = new IntCC(input);
