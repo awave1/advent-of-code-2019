@@ -1,4 +1,4 @@
-const { solve, checkPassword } = require('./day4.p1');
+import { solve, checkPassword } from './day4.p1';
 
 const check = ({ input, expected }) => expect(solve(input)).toBe(expected);
 

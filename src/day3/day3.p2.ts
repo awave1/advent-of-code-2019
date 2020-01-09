@@ -15,6 +15,7 @@ const dy = { U: 1, D: -1, L: 0, R: 0 };
 function plotPoints(entries) {
   let x = 0;
   let y = 0;
+  let steps = 0;
   let map = new Map();
 
   for (let i = 0; i < entries.length; i++) {
@@ -23,14 +24,15 @@ function plotPoints(entries) {
       for (let j = 0; j < val; j++) {
         x += dx[direction];
         y += dy[direction];
+        steps++;
 
         const key = `${x},${y}`;
         if (!map.has(key)) {
-          map.set(key, [i]);
+          map.set(key, [{ index: i, steps }]);
         } else {
-          const arr = map.get(key);
-          if (!arr.includes(i)) {
-            map.get(key).push(i);
+          const el = map.get(key).find(({ index }) => index === i);
+          if (!el) {
+            map.get(key).push({ index: i, steps });
           }
         }
       }
@@ -38,6 +40,7 @@ function plotPoints(entries) {
 
     x = 0;
     y = 0;
+    steps = 0;
   }
 
   return map;
@@ -50,7 +53,8 @@ function intersection(hashmap) {
   for (let [k, v] of entries) {
     if (v.length === 2) {
       const [x, y] = k.split(',');
-      result.push({ x: _.toInteger(x), y: _.toInteger(y) });
+      const steps = v.reduce((acc, curr) => acc + curr.steps, 0);
+      result.push({ x: _.toInteger(x), y: _.toInteger(y), steps });
     } else {
       hashmap.delete(k);
     }
@@ -59,10 +63,10 @@ function intersection(hashmap) {
   return result;
 }
 
-function solve(input) {
+export function solve(input) {
   const plotResult = plotPoints(parse(input));
   const intersected = intersection(plotResult);
-  const sums = intersected.map(({ x, y }) => abs(x) + abs(y));
+  const sums = intersected.map(({ steps }) => steps);
 
   return _.min(sums);
 }
