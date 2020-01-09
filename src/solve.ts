@@ -32,7 +32,7 @@ function readInput(day: number, part: number): string {
   const input = fs
     .readdirSync(basePath())
     .map(basePath)
-    .find(f => f.includes(`input${day}.${part}`));
+    .find(f => f.includes(`input${day}.${part}.txt`));
 
   if (input && fs.existsSync(input)) {
     return fs.readFileSync(input, 'utf-8');
