@@ -1,5 +1,5 @@
-const { solve } = require('./day2.p2');
-const { IntCC } = require('../intcode/intcodeCompiler');
+import { solve } from './day2.p2';
+import IntCC from '../intcode/intcodeCompiler';
 
 test('day2', () => {
   const program = `1,0,0,0,99`;

@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-const fs = require('fs');
+import * as fs from 'fs';
 
 /**
  * Problem Description:
@@ -29,9 +29,11 @@ const fs = require('fs');
  * (Calculate the fuel requirements for each module separately, then add them all up at the end.)
  */
 
-function solve(input) {
+export function solve(input) {
   const calc = m => Math.floor(m / 3) - 2;
   return input
+    .split('\n')
+    .map(Number)
     .map(mass => {
       let fuelReq = calc(mass);
       let sum = 0;
@@ -48,5 +50,3 @@ function solve(input) {
     })
     .reduce((a, b) => a + b, 0);
 }
-
-module.exports = { solve };

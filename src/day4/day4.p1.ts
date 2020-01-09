@@ -1,4 +1,4 @@
-const _ = require('lodash');
+import { toInteger } from 'lodash';
 
 /**
  * Check if given password matches the following:
@@ -11,14 +11,16 @@ const _ = require('lodash');
  * @param {number} password
  * @return {boolean} true if all conditions are satisfied
  */
-function checkPassword(password) {
-  let pass = `${password}`.split('').map(_.toInteger);
+export function checkPassword(password) {
+  let pass = `${password}`.split('').map(toInteger);
 
   if (pass.length < 6) {
     return false;
   }
 
-  const isIncreasing = pass.every((val, i, arr) => i === 0 || arr[i - 1] <= val);
+  const isIncreasing = pass.every(
+    (val, i, arr) => i === 0 || arr[i - 1] <= val
+  );
 
   if (!isIncreasing) {
     return false;
@@ -31,17 +33,15 @@ function checkPassword(password) {
     if (!dups.has(num)) {
       dups.set(num, 1);
     } else {
-      let count = dups.get(num) + 1;
+      let count = dups.get(num);
+      count += 1;
       dups.set(num, count);
     }
   }
 
   const entries = dups.entries();
-  for (const entry of entries) {
-    const [num, count] = entry;
-    if (count === 2) {
-      return true;
-    } else {
+  for (const [num, count] of entries) {
+    if (count === 1) {
       dups.delete(num);
     }
   }
@@ -60,12 +60,7 @@ function countPossible(from, to) {
   return count;
 }
 
-function solve(input) {
-  const [from, to] = input.split('-').map(_.toInteger);
+export function solve(input) {
+  const [from, to] = input.split('-').map(toInteger);
   return countPossible(from, to);
 }
-
-module.exports = {
-  solve,
-  checkPassword,
-};

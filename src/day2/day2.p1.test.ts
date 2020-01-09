@@ -1,4 +1,4 @@
-const { solve } = require('./day2.p1');
+import { solve } from './day2.p1';
 
 test('day2', () => {
   const tests = [

@@ -1,5 +1,4 @@
-
-function solve(input) {
+export function solve(input) {
   console.log('TODO');
 }
 

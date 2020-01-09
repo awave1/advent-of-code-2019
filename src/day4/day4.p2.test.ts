@@ -1,4 +1,4 @@
-const { checkPassword } = require('./day4.p2');
+import { checkPassword } from './day4.p2';
 
 test('day4.p2: check password - should not meet the criteria: not sorted', () => {
   const pass = 312233;
@@ -25,7 +25,7 @@ test('day4.p2: check password - should meet the criteria - `1111`', () => {
   expect(checkPassword(pass)).toBe(true);
 });
 
-test('day4.p2: check password - `377788` should meet the criteria',() => {
+test('day4.p2: check password - `377788` should meet the criteria', () => {
   const pass = 377788;
   expect(checkPassword(pass)).toBe(true);
 });

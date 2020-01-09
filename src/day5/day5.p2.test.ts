@@ -1,5 +1,4 @@
-
-const { solve } = require('./day5.p2');
+import { solve } from './day5.p2';
 const tests = [
   {
     input: 'TODO',

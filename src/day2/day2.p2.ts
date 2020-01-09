@@ -1,6 +1,6 @@
-const { IntCC } = require('../intcode/intcodeCompiler');
+import IntCC from '../intcode/intcodeCompiler';
 
-function solve(input, expected = 19690720) {
+export function solve(input, expected = 19690720) {
   const compiler = new IntCC(input);
   let noun = 0;
   let verb = 0;

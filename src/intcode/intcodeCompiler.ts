@@ -29,12 +29,15 @@ const opcodes = {
 };
 
 class IntCC {
-  constructor(code) {
+  code: string;
+  program: number[];
+
+  constructor(code: string) {
     this.code = code;
     this.program = this.parse();
   }
 
-  parse() {
+  parse(): number[] {
     return this.code
       .split(',')
       .map(Number)
@@ -53,7 +56,7 @@ class IntCC {
     return this;
   }
 
-  compile() {
+  compile(): number {
     const { program } = this;
     const { HALT, ADD, MUL } = opcodes;
 
@@ -84,4 +87,4 @@ class IntCC {
   }
 }
 
-module.exports = { IntCC };
+export default IntCC;
